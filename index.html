@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Editor de PDF NISH</title>
+  <title>Protege Redes de Proteção</title>
   <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <script src="./script.js"></script>
 
@@ -10,66 +10,90 @@
 </head>
 <body>
 
-<h1>Preencher PDF NISH</h1>
+<h1>Ordem de Serviço</h1>
 
-<form id="formulario" autocomplete="off">
+<form id="formulario">
   <h3>Dados do Cliente</h3>
-  <label>Orçamento N°: <input name="orcamento_numero"/></label>
-  <label>Cliente: <input name="cliente"/></label>
-  <label>Rua: <input name="rua"/></label>
-  <label>Cidade: <input name="cidade"/></label>
-  <label>Cond/Razão: <input name="cond"/></label>
-  <label>Bloco: <input name="bloco"/></label>
-  <label>Telefone: <input name="telefone"/></label>
-  <label>e-Mail: <input name="email"/></label>
-  <label>Observação: <textarea name="observacao"></textarea></label>
-  <label>Data da Instalação: <input name="data_instalacao"/></label>
-  <label>Horário: <input name="horario"/></label>
-  <label>Instalador: <input name="instalador"/></label>
-  <label>Valor Mercadoria: <input name="valor_mercadoria"/></label>
-  <label>Desconto: <input name="desconto"/></label>
-  <label>Acrescimo: <input name="acrescimo"/></label>
-  <label>Valor Final: <input name="valor_final"/></label>
+  <label>Orçamento N°: <input name="orcamento_numero" value="59917"/></label>
+  <label>Cliente: <input name="cliente" value="Rosana"/></label>
+  <label>Rua: <input name="rua" value="Etiopia"/></label>
+  <label>Cidade: <input name="cidade" value="São Paulo"/></label>
+  <label>Cond/Razão: <input name="cond" value="Condominio Canto dos Canarios"/></label>
+  <label>Bloco: <input name="bloco" value="Bloco 4, apto 203"/></label>
+  <label>Telefone: <input name="telefone" value="19 97168-4249"/></label>
+  <label>e-Mail: <input name="email" value="nathavieira34@gmail.com"/></label>
+  <label>Observação: <textarea name="observacao" >PROPOSTA.59917 DATA.25/02/2025 VALIDADE.10 dias
+Valor do orçamento: R$1.303,40
+Forma de pagamento: 2x cartão R$651,70 ou R$ 1.238,23 à vista (PIX,débito ou
+ dinheiro)
+Data de instalação: a combinar
+NISH REDES DE PROTEÇÃO LTDA - CNPJ:58.699.067/0001-46</textarea></label>
+  <label>Data da Instalação: <input name="data_instalacao" value= "12/26/2026"/></label>
+  <label>Horário: <input name="horario" value="10:00"/></label>
+  <label>Instalador: <input name="instalador" value="Marcos"/></label>
+  <label>Valor Mercadoria: <input name="valor_mercadoria" value="1303,40"/></label>
+  <label>Desconto: <input name="desconto" value="0,00"/></label>
+  <label>Acrescimo: <input name="acrescimo" value=" 0,00"/></label>
+  <label>Valor Final: <input name="valor_final" value=" 1303,40"/></label>
 
   <h3>Itens do Orçamento</h3>
   <div>
-    <label>Item 1 - Quantidade: <input name="qtd_1"></label>
-    <label>Serviço: <input name="servico_1"/></label>
-    <label>Descrição: <textarea name="desc_1"></textarea></label>
-    <label>Código Rede: <input name="codigo_1"/></label>
-    <label>Cor: <input name="cor_1"/></label>
-    <label>Valor Total: <input name="valor_item_1"/></label>
+    <label>Item 1 - Quantidade: <input name="qtd_1" value="1"></label>
+    <label>Serviço: <input name="servico_1" value="COZINHA: OPCAO LIM2"/></label>
+    <label>Descrição: <textarea name="desc_1">redes de proteção INTERNA nas malhas 10x10 cor branco
+ material em polietileno alta densidade aditivado contra UV e antioxidante
+ fixação com ganchos zincados sobre buchas de nylon com abas S8 e cordas
+ >> ATENÇÃO, existe risco de trincar azulejo, rejunte, alvenaria e/ou furar canos</textarea></label>
+    <label>Código Rede: <input name="codigo_1" value="CT1003"/></label>
+    <label>Cor: <input name="cor_1" value="BRANCA
+ F.3"/></label>
+    <label>Valor Total: <input name="valor_item_1" value=" 75,60"/></label>
   </div>
 
   <div>
-    <label>Item 2 - Quantidade: <input name="qtd_2"/></label>
-    <label>Serviço: <input name="servico_2"/></label>
-    <label>Descrição: <textarea name="desc_2"></textarea></label>
-    <label>Código Rede: <input name="codigo_2"/></label>
-    <label>Cor: <input name="cor_2"/></label>
-    <label>Valor Total: <input name="valor_item_2"/></label>
+    <label>Item 2 - Quantidade: <input name="qtd_2" value="2"/></label>
+    <label>Serviço: <input name="servico_2" value="JANELAS QUARTO: SILICONE"/></label>
+    <label>Descrição: <textarea name="desc_2">redes de proteção nas malhas 5x5cm cor branco
+ material em polietileno alta densidade aditivado contra UV e antioxidante
+ fixar com ganchos zincados sobre buchas de nylon com abas S8 e cordas--------------------------------------------------------------------------
+OBS.: Serviço de furadeira faz barulho e poeira, recomendamos afastar
+ moveis e/ou cobri-los
+ Corre risco de trincar rejunte/azulejo/alvenaria/pedra ou furar cano.</textarea></label>
+    <label>Código Rede: <input name="codigo_2" value="CT50"/></label>
+    <label>Cor: <input name="cor_2" value="BRANCA"/></label>
+    <label>Valor Total: <input name="valor_item_2" value="178,20"/></label>
   </div>
 
   <div>
-    <label>Item 3 - Quantidade: <input name="qtd_3"/></label>
-    <label>Serviço: <input name="servico_3"/></label>
-    <label>Descrição: <textarea name="desc_3"></textarea></label>
-    <label>Código Rede: <input name="codigo_3"/></label>
-    <label>Cor: <input name="cor_3"/></label>
-    <label>Valor Total: <input name="valor_item_3"/></label>
+    <label>Item 3 - Quantidade: <input name="qtd_3" value="1"/></label>
+    <label>Serviço: <input name="servico_3" value="SACADA SUITE C/VIDRO *OBS OU"/></label>
+    <label>Descrição: <textarea name="desc_3">redes de proteção nas malhas 5x5cm cor branco
+ material em polietileno alta densidade aditivado contra UV e antioxidante
+ fixar com ganchos zincados sobre buchas de nylon com abas S8 e cordas
+ *tem vidros - todos correm*--------------------------------------------------------------------------
+OBS.: Serviço de furadeira faz barulho e poeira, recomendamos afastar
+ moveis e/ou cobri-los
+ Corre risco de trincar rejunte/azulejo/alvenaria/pedra ou furar cano.</textarea></label>
+    <label>Código Rede: <input name="codigo_3" value="CT51"/></label>
+    <label>Cor: <input name="cor_3" value="BRANCA"/></label>
+    <label>Valor Total: <input name="valor_item_3" value="524,80"/></label>
   </div>
 
   <div>
-    <label>Item 4 - Quantidade: <input name="qtd_4"/></label>
-    <label>Serviço: <input name="servico_4"/></label>
-    <label>Descrição: <textarea name="desc_4"></textarea></label>
-    <label>Código Rede: <input name="codigo_4"/></label>
-    <label>Cor: <input name="cor_4"/></label>
-    <label>Valor Total: <input name="valor_item_4"/></label>
+    <label>Item 4 - Quantidade: <input name="qtd_4" value="1"/></label>
+    <label>Serviço: <input name="servico_4" value="SACADA SUITE NR35 SILICONE"/></label>
+    <label>Descrição: <textarea name="desc_4"> redes de proteção nas malhas 5x5cm cor branco
+ material em polietileno alta densidade aditivado contra UV e antioxidante
+ fixar com ganchos zincados sobre buchas de nylon com abas S8 e cordas--------------------------------------------------------------------------
+OBS.: Serviço de furadeira faz barulho e poeira, recomendamos afastar
+ moveis e/ou cobri-los
+ Corre risco de trincar rejunte/azulejo/alvenaria/pedra ou furar cano.</textarea></label>
+    <label>Código Rede: <input name="codigo_4" value="CT51"/></label>
+    <label>Cor: <input name="cor_4" value="BRANCA"/></label>
+    <label>Valor Total: <input name="valor_item_4" value="524,80"/></label>
   </div>
 
   <button type="submit" id="generatePDF">Gerar PDF</button>
-  <button type="button" id="limpar">Limpar</button>
 </form>
 
 <script>

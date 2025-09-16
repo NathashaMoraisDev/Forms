@@ -272,10 +272,32 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   // Gera PDF ao pressionar Enter no formulário
-  document.getElementById("formulario").addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
+  const formEl = document.getElementById("formulario");
+
+  // Shift+Enter em textareas: quebra linha; Enter normal continua gerando PDF
+  formEl.addEventListener("keydown", function(e) {
+    const target = e.target;
+    const isTextarea = target && target.tagName === 'TEXTAREA';
+
+    // Caso: Shift+Enter dentro de textarea => inserir quebra de linha manualmente
+    if (isTextarea && e.key === 'Enter' && e.shiftKey) {
       e.preventDefault();
-      document.getElementById("formulario").dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+      const el = target;
+      const start = el.selectionStart ?? el.value.length;
+      const end = el.selectionEnd ?? el.value.length;
+      const before = el.value.substring(0, start);
+      const after = el.value.substring(end);
+      el.value = before + "\n" + after;
+      // reposiciona o cursor após a quebra
+      const newPos = start + 1;
+      el.setSelectionRange?.(newPos, newPos);
+      return; // não submete
+    }
+
+    // Enter normal (sem Shift) em qualquer campo => gerar PDF (comportamento existente)
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      formEl.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
     }
   });
 });
