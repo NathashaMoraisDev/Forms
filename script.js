@@ -85,8 +85,49 @@ function baixarPDF() {
   html2pdf().set(opt).from(preview).save();
 }
 
+function getForm() {
+  
+}
+
+function salvarFormulario() {
+  const currentForm = getFormularios()
+  if(!currentForm) {
+    const forms = {}
+  }
+}
+
+function getSavedForms() {
+  const forms = localStorage.getItem('forms')
+  return forms ? JSON.parse(forms) : null;
+}
 
 document.addEventListener("DOMContentLoaded", function() {
+  // Garante que o formulário inicie limpo e adiciona ação do botão "Limpar"
+  const formularios = getSavedForms()
+  function limparFormulario() {
+    const form = document.getElementById('formulario');
+    if (!form) return;
+    // Reset para valores padrão (agora todos vazios)
+    form.reset();
+    // Limpa explicitamente todos os campos para evitar auto-preenchimento do navegador
+    form.querySelectorAll('input:not([type="button"]):not([type="submit"]):not([type="reset"])').forEach(el => {
+      el.value = "";
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+    });
+    form.querySelectorAll('textarea').forEach(el => el.value = "");
+  }
+
+  // Executa limpeza ao carregar a página
+  limparFormulario();
+
+  // Botão Limpar
+  const btnLimpar = document.getElementById("limpar");
+  if (btnLimpar) {
+    btnLimpar.addEventListener("click", function() {
+      limparFormulario();
+    });
+  }
+
   document.getElementById("formulario").addEventListener("submit", async function(e) {
   e.preventDefault();
   const form = Object.fromEntries(new FormData(e.target).entries());
