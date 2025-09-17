@@ -277,28 +277,35 @@ document.addEventListener("DOMContentLoaded", function() {
   // Gera PDF ao pressionar Enter no formulário
   const formEl = document.getElementById("formulario");
 
-  // Shift+Enter em textareas: quebra linha; Enter normal continua gerando PDF
+  // Em textareas: Enter (com ou sem Shift) NÃO deve submeter o formulário
+  // - Shift+Enter: inserimos quebra de linha manualmente
+  // - Enter simples: deixamos o comportamento padrão do textarea (quebra de linha)
   formEl.addEventListener("keydown", function(e) {
     const target = e.target;
     const isTextarea = target && target.tagName === 'TEXTAREA';
 
-    // Caso: Shift+Enter dentro de textarea => inserir quebra de linha manualmente
-    if (isTextarea && e.key === 'Enter' && e.shiftKey) {
-      e.preventDefault();
-      const el = target;
-      const start = el.selectionStart ?? el.value.length;
-      const end = el.selectionEnd ?? el.value.length;
-      const before = el.value.substring(0, start);
-      const after = el.value.substring(end);
-      el.value = before + "\n" + after;
-      // reposiciona o cursor após a quebra
-      const newPos = start + 1;
-      el.setSelectionRange?.(newPos, newPos);
-      return; // não submete
+    // Enter pressionado em textarea
+    if (isTextarea && e.key === 'Enter') {
+      if (e.shiftKey) {
+        // Inserir quebra de linha manual (alguns teclados móveis podem não inserir corretamente)
+        e.preventDefault();
+        const el = target;
+        const start = el.selectionStart ?? el.value.length;
+        const end = el.selectionEnd ?? el.value.length;
+        const before = el.value.substring(0, start);
+        const after = el.value.substring(end);
+        el.value = before + "\n" + after;
+        // reposiciona o cursor após a quebra
+        const newPos = start + 1;
+        el.setSelectionRange?.(newPos, newPos);
+      }
+      // Para Enter simples em textarea, deixamos o comportamento padrão (inserir nova linha)
+      // e retornamos para NÃO acionar o envio por Enter geral
+      return;
     }
 
-    // Enter normal (sem Shift) em qualquer campo => gerar PDF (comportamento existente)
-    if (e.key === 'Enter' && !e.shiftKey) {
+    // Enter normal (sem Shift) fora de textarea => gerar PDF (comportamento existente)
+    if (e.key === 'Enter' && !e.shiftKey && !isTextarea) {
       e.preventDefault();
       formEl.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
     }
