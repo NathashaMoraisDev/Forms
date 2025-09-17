@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const boldFont = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
 
     // Função para centralizar, alinhar à esquerda ou início, e definir tamanho da fonte
-    const drawText = (text, x, y, fieldWidth = 100, align = "center", fontSize = 10, maxLines = 1, useBoldFont = false) => {
+    const drawText = (text, x, y, fieldWidth = 100, align = "center", fontSize = 10, maxLines = 1, useBoldFont = false, maxCharsPerLineOverride = null) => {
       if (text) {
         const selectedFont = useBoldFont ? boldFont : font;
         const textStr = text.toString();
@@ -161,7 +161,9 @@ document.addEventListener("DOMContentLoaded", function() {
           }
           
           // Quebra linhas muito longas
-          const maxCharsPerLine = Math.floor(fieldWidth / (fontSize * 0.25));
+          const maxCharsPerLine = (Number.isFinite(maxCharsPerLineOverride) && maxCharsPerLineOverride > 0)
+            ? Math.floor(maxCharsPerLineOverride)
+            : Math.floor(fieldWidth / (fontSize * 0.25));
           if (originalLine.length <= maxCharsPerLine) {
             allLines.push(originalLine);
           } else {
@@ -226,8 +228,9 @@ document.addEventListener("DOMContentLoaded", function() {
     drawText(form.acrescimo, 465, 510, 100, "end", 8, 1, true); // Acrescimo - negrito
     drawText(form.valor_final, 465, 475, 100, "end", 8, 1, true); // Valor Final - negrito
 
-    // Observação (alinhado à esquerda, Y ajustado, permitindo múltiplas linhas com texto longo)
-    drawText(form.observacao, 115, 560, 400, "start", 8, 8);
+  // Observação (alinhado à esquerda, Y ajustado, permitindo múltiplas linhas com texto longo)
+  // Limita o comprimento das linhas para melhor encaixe visual (ex.: 70 caracteres por linha)
+  drawText(form.observacao, 115, 560, 400, "start", 8, 8, false, 70);
 
 
       drawText(form[`qtd_1`], 70, 430, 30, "center", 8); // Qtd
