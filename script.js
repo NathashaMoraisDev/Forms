@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Value length:", e.target.value.length); // Debug
     populateForm(e.target.value);
   });
-  
+
   const formularios = getSavedForms()
   function limparFormulario() {
     const form = document.getElementById('formulario');
@@ -154,7 +154,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Executa limpeza ao carregar a página
   limparFormulario();
-
+  if (localStorage.length == 1) {
+    const form = localStorage.getItem(localStorage.key(0))
+    console.log(form)
+    populateForm(form);
+  }
   // Botão Limpar
   const btnLimpar = document.getElementById("limpar");
   if (btnLimpar) {
