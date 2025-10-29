@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "orcamento_nish_editado.pdf";
+    link.download = `${form.cliente}-protege-redes-os`;
     link.click();
   } catch (error) {
     alert("Erro ao gerar o PDF: " + error.message);
