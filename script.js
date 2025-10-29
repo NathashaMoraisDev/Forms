@@ -10,12 +10,13 @@ function gerarPreview() {
     <p><strong>Telefone:</strong> ${dados.get("telefone") || ""}</p>
     <p><strong>E-mail:</strong> ${dados.get("email") || ""}</p>
     <p><strong>Data de instalação:</strong> ${dados.get("data_instalacao") || ""}</p>
+    <p><strong>Data de emissão:</strong> ${dados.get("data_emissao") || ""}</p>
     <p><strong>Horário:</strong> ${dados.get("horario") || ""}</p>
     <p><strong>Instalador:</strong> ${dados.get("instalador") || ""}</p>
     <p><strong>Valor mercadoria:</strong> ${dados.get("valor_mercadoria") || ""}</p>
     <p><strong>Desconto:</strong> ${dados.get("desconto") || ""}</p>
     <p><strong>Acrescimo:</strong> ${dados.get("acrescimo") || ""}</p>
-    <p><strong>Valor Final:</strong> ${dados.get("valor_final") || ""}</p>
+    <p><strong>Valor Final:</strong><br>${(dados.get("valor_final") || "").replace(/\n/g, "<br>")}</p>
     <p><strong>Observação:</strong><br>${(dados.get("observacao") || "").replace(/\n/g, "<br>")}</p>
     <hr>
     <h3>Itens do orçamento:</h3>
@@ -133,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const form = Object.fromEntries(new FormData(e.target).entries());
 
   try {
-    const existingPdfBytes = await fetch("./59917 -Rosana_250709_153019.pdf.pdf").then(res => {
+    const existingPdfBytes = await fetch("./Protege Redes Ordem de Serviço.pdf").then(res => {
 
       if (!res.ok) throw new Error("Falha ao carregar o PDF base.");
       return res.arrayBuffer();
@@ -226,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function() {
     drawText(form.valor_mercadoria, 465, 555, 100, "end", 8, 1, true); // Valor mercadoria - negrito
     drawText(form.desconto, 465, 534, 100, "end", 8, 1, true); // Desconto - negrito
     drawText(form.acrescimo, 465, 510, 100, "end", 8, 1, true); // Acrescimo - negrito
-    drawText(form.valor_final, 465, 475, 100, "end", 8, 1, true); // Valor Final - negrito
+    drawText(form.valor_final, 465, 485, 100, "end", 8, 3, true, 25); // Valor Final - negrito, 3 linhas, max 25 chars/linha
 
   // Observação (alinhado à esquerda, Y ajustado, permitindo múltiplas linhas com texto longo)
   // Limita o comprimento das linhas para melhor encaixe visual (ex.: 70 caracteres por linha)
@@ -234,33 +235,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
       drawText(form[`qtd_1`], 70, 430, 30, "center", 8); // Qtd
-      drawText(form[`servico_1`], 105, 438, 120, "start", 8, 2); // Serviço (permite 2 linhas)
-      drawText(form[`desc_1`], 105, 412, 200, "start", 8, 5); // Descrição (5 linhas para texto longo)
+      drawText(form[`servico_1`], 107, 430, 120, "start", 8, 2); // Serviço (permite 2 linhas)
+      drawText(form[`desc_1`], 105, 412, 420, "start", form[`desc_1`].length <  500 ? 8 : 7, 4, false, form[`desc_1`].length <  500 ? 80 : 147); // Descrição - 127 chars/linha, 5 linhas
       drawText(form[`codigo_1`], 305, 430, 60, "center", 8); // Código
       drawText(form[`cor_1`], 375, 430, 60, "center", 8); // Cor
       drawText(form[`valor_item_1`], 497, 425, 70, "end", 8); // Valor
 
       drawText(form[`qtd_2`], 70, 368, 30, "center", 8); // Qtd
-      drawText(form[`servico_2`], 105, 370, 120, "start", 8, 2); // Serviço (permite 2 linhas)
-      drawText(form[`desc_2`], 105, 356, 200, "start", 8, 7); // Descrição (5 linhas para texto longo)
+      drawText(form[`servico_2`], 107, 368, 120, "start", 8, 2); // Serviço (permite 2 linhas)
+      drawText(form[`desc_2`], 105, 356, 420, "start", form[`desc_2`].length <  500 ? 8 : 7, 7, false, form[`desc_2`].length <  500 ? 80 : 147); // Descrição - 127 chars/linha, 7 linhas
       drawText(form[`codigo_2`], 305, 368, 60, "center", 8); // Código
       drawText(form[`cor_2`], 375, 368, 60, "center", 8); // Cor
       drawText(form[`valor_item_2`], 497, 368, 70, "end", 8); // Valor
 
       
       drawText(form[`qtd_3`], 70, 284, 30, "center", 8); // Qtd
-      drawText(form[`servico_3`], 105, 286, 120, "start", 8, 2); // Serviço (permite 2 linhas)
-      drawText(form[`desc_3`], 105, 267, 200, "start", 8, 7); // Descrição (5 linhas para texto longo)
+      drawText(form[`servico_3`], 107, 284, 120, "start", 8, 2); // Serviço (permite 2 linhas)
+      drawText(form[`desc_3`], 105, 271, 420, "start", form[`desc_3`].length <  500 ? 8 : 7, 7, false, form[`desc_3`].length <  500 ? 80 : 147); // Descrição - 127 chars/linha, 7 linhas
       drawText(form[`codigo_3`], 305, 283, 60, "center", 8); // Código
       drawText(form[`cor_3`], 375, 283, 60, "center", 8); // Cor
       drawText(form[`valor_item_3`], 497, 283, 70, "end", 8); // Valor
 
       drawText(form[`qtd_4`], 70, 190, 30, "center", 8); // Qtd
-      drawText(form[`servico_4`], 105, 191, 120, "start", 8, 2); // Serviço (permite 2 linhas)
-      drawText(form[`desc_4`], 105, 178, 200, "start", 8, 7); // Descrição (5 linhas para texto longo)
+      drawText(form[`servico_4`], 107, 190, 120, "start", 8, 2); // Serviço (permite 2 linhas)
+      drawText(form[`desc_4`], 105, 178, 420, "start", form[`desc_4`].length <  500 ? 8 : 7, 7, false, form[`desc_4`].length <  500 ? 80 : 147); // Descrição - 127 chars/linha, 7 linhas
       drawText(form[`codigo_4`], 305, 190, 60, "center", 8); // Código
       drawText(form[`cor_4`], 375, 190, 60, "center", 8); // Cor
       drawText(form[`valor_item_4`], 497, 190, 70, "end", 8); // Valor
+
+    // Rodapé com data de emissão
+    if (form.data_emissao) {
+      // Converter data do formato YYYY-MM-DD para DD/MM/YYYY
+      const dataEmissao = form.data_emissao;
+      const [ano, mes, dia] = dataEmissao.split('-');
+      const dataFormatada = `${dia}/${mes}/${ano}`;
+      
+      drawText(dataFormatada, 230, 49, 200, "center", 9, 1, false); // Mais baixo e à esquerda
+    }
 
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
