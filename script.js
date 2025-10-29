@@ -86,26 +86,38 @@ function baixarPDF() {
   html2pdf().set(opt).from(preview).save();
 }
 
-function getForm() {
 
+
+function limparFormulario() {
+  const form = document.getElementById('formulario');
+  if (!form) return;
+  // Reset para valores padrão (agora todos vazios)
+  form.reset();
+  // Limpa explicitamente todos os campos para evitar auto-preenchimento do navegador
+  form.querySelectorAll('input:not([type="button"]):not([type="submit"]):not([type="reset"])').forEach(el => {
+    el.value = "";
+    if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+  });
+  form.querySelectorAll('textarea').forEach(el => el.value = "");
 }
 
-
-
 function populateForm(formData) {
-  console.log('awd')
+  if (formData == '') {
+    limparFormulario()
+    return
+  }
   const values = JSON.parse(formData)
-    Object.keys(values).forEach(fieldName => {
-      const field = document.querySelector(`[name="${fieldName}"]`);
-      
-      if (field) {
-        if (field.type === 'checkbox' || field.type === 'radio') {
-          field.checked = values[fieldName] === 'on' || values[fieldName] === true;
-        } else {
-          field.value = values[fieldName] || '';
-        }
+  Object.keys(values).forEach(fieldName => {
+    const field = document.querySelector(`[name="${fieldName}"]`);
+
+    if (field) {
+      if (field.type === 'checkbox' || field.type === 'radio') {
+        field.checked = values[fieldName] === 'on' || values[fieldName] === true;
+      } else {
+        field.value = values[fieldName] || '';
       }
-    });
+    }
+  });
 }
 
 function getSavedForms() {
@@ -120,6 +132,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Garante que o formulário inicie limpo e adiciona ação do botão "Limpar"
   const optionsForm = []
   const selectElement = document.getElementById("select-form");
+  const defaultOption = new Option('', '');
+  selectElement.add(defaultOption)
+
+
   for (let i = 0; i < localStorage.length; i++) {
     // Pega a chave pelo índice
     const key = localStorage.key(i);
@@ -132,33 +148,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const option = new Option(key, value);
     selectElement.add(option)
   }
-   selectElement.addEventListener('change', (e) => {
+  selectElement.addEventListener('change', (e) => {
     console.log("Select changed! Value:", e.target.value); // Debug
     console.log("Value length:", e.target.value.length); // Debug
     populateForm(e.target.value);
   });
 
   const formularios = getSavedForms()
-  function limparFormulario() {
-    const form = document.getElementById('formulario');
-    if (!form) return;
-    // Reset para valores padrão (agora todos vazios)
-    form.reset();
-    // Limpa explicitamente todos os campos para evitar auto-preenchimento do navegador
-    form.querySelectorAll('input:not([type="button"]):not([type="submit"]):not([type="reset"])').forEach(el => {
-      el.value = "";
-      if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
-    });
-    form.querySelectorAll('textarea').forEach(el => el.value = "");
-  }
+
 
   // Executa limpeza ao carregar a página
   limparFormulario();
-  if (localStorage.length == 1) {
-    const form = localStorage.getItem(localStorage.key(0))
-    console.log(form)
-    populateForm(form);
-  }
+  // if (localStorage.length == 1) {
+  //   const form = localStorage.getItem(localStorage.key(0))
+  //   console.log(form)
+  //   populateForm(form);
+  // }
   // Botão Limpar
   const btnLimpar = document.getElementById("limpar");
   if (btnLimpar) {
@@ -169,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("formulario").addEventListener("submit", async function (e) {
     e.preventDefault();
-    
+
     const form = Object.fromEntries(new FormData(e.target).entries());
     localStorage.setItem(form.cliente, JSON.stringify(form))
 
